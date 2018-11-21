@@ -1,0 +1,297 @@
+{% load static %}<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Vista de Profesor{% endblock %}</title>
+  <link href="https://fonts.googleapis.com/css?family=Peralta" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+  crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"/>
+
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="">Bienvenido, {{ nombreProfesor.first_name }} {{ nombreProfesor.last_name}}</a>
+    </div>
+    <p></p>
+    <div align="center">
+      <h2>Citas</h2>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div>
+      <form action="/logout" method="post">
+      {% csrf_token %}
+        <button type="submit" name="logout" class="btn btn-danger">Logout</button>
+      </form>
+    </div>
+    <div align="right">
+      <form action="/citaFin" method='get'>
+      {% csrf_token %}
+        <button class="btn btn-primary" type="submit" name="citaFin">Citas Finalizadas</button>
+      </form>
+    </div>
+    <p></p>
+  <table class="table">
+    <thead class="thead-inverse">
+      <tr>
+        <th></th>
+        <th>Curso</th>
+        <th>Alumno</th>
+        <th>Horario</th>
+        <th>Lugar</th>
+        <th>Día</th>
+        <th>Sección</th>
+
+        <th>Fecha</th>
+        <th>Operación</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in arreglo %}
+
+          <tr>
+            <th><input type= "hidden" name="id_cita" value= {{ item.id }}></th>
+            <th>{{ item.curso }}</th>
+            <th>{{ item.alumno }}</th>
+            <th>{{ item.horario }}</th>
+            <th>{{ item.lugar }}</th>
+            <th>{{ item.dia }}</th>
+            <th>{{ item.seccion }}</th>
+
+            <th>{{ item.fechaCita|date:'d-m-Y' }}</th>
+            <th>
+            <a href="#" data-toggle="modal" data-target="#{{item.id}}"> Ver detalle <i class="fa fa-pencil-square-o"></i> </a>
+            </th>
+
+          </tr>
+      {% endfor %}
+    </div>
+
+    {% for item in arreglo %}
+    <form class="" action="/feedback" method="post">
+    {% csrf_token %}
+    <div class="modal fade" id="{{item.id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">Feedback</h2>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h5>Comentario del alumno</h5>
+                  <input type= "hidden" name="id_cita" value= {{ item.id }}>
+                  <textarea rows="4" cols="40" disabled> {{item.comentario }} </textarea>
+
+                    {% ifequal item.archivo 0 %}
+                      {% csrf_token %}
+                      <a>No hay archivo</a>
+
+                    {%else%}
+                    {% csrf_token %}
+                    <li>  <a href="{{ item.archivo }}">Descargar Archivo<i class="fa fa-cloud-download"></i></a></li>
+
+                    {% endifequal %}
+                    </ul>
+                </div>
+                <div class="col-sm-6">
+                  <h5>Feedback</h5>
+                  <textarea name="feedback" rows="4" cols="40"></textarea>
+                  <button class="btn btn-primary" type="submit" name="agregarComentario">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </tr>
+    </form>
+    {% endfor %}
+    </tbody>
+    </table>
+    <strong><a href="#" data-toggle="modal" data-target="#cancelarAsesoria">Cancelar Asesorias <i class="fa fa-pencil-square-o"></i> </a></strong>
+    <form method="post" action="/cancelarAsesoria">
+    {% csrf_token %}
+    <div class="modal fade" id="cancelarAsesoria" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">Cancelar Asesorias</h2>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h5>Curso</h5>
+                  <select class="seleccionarCurso" name="cursoSeleccionado">
+                    <option value="seleccionar">Seleccione un curso</option>
+                    {% for curso in arregloCurso %}
+                      <option value={{curso.id}}>{{curso.nombre}}</option>
+                    {% endfor %}
+                  </select>
+                  <select id="id_dia" class="seleccionarDia" name="diaSeleccionado"></select>
+                </div>
+                <div class="col-sm-6">
+                  <h5>Semana</h5>
+                  <select class="semana" name="semanaSeleccionada">
+                    <option value="seleccion">Selecciona una semana</option>
+                    <option value="1">Semana 1</option>
+                    <option value="2">Semana 2</option>
+                    <option value="3">Semana 3</option>
+                    <option value="4">Semana 4</option>
+                    <option value="5">Semana 5</option>
+                    <option value="6">Semana 6</option>
+                    <option value="7">Semana 7</option>
+                    <option value="8">Semana 8</option>
+                    <option value="9">Semana 9</option>
+                    <option value="10">Semana 10</option>
+                    <option value="11">Semana 11</option>
+                    <option value="12">Semana 12</option>
+                    <option value="13">Semana 13</option>
+                    <option value="14">Semana 14</option>
+                    <option value="15">Semana 15</option>
+                    <option value="16">Semana 16</option>
+                  </select>
+                  <br>
+                  <br>
+                  <button class="btn btn-primary" type="submit" name="cerrarDisponibilidad">Cancelar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </tr>
+    </form>
+
+    <strong><a href="#" data-toggle="modal" data-target="#cambiarDisponibilidad">Cambiar Disponibilidad <i class="fa fa-pencil-square-o"></i> </a></strong>
+    <form method="post" action="/cambiarDisponibilidad">
+    {% csrf_token %}
+    <div class="modal fade" id="cambiarDisponibilidad" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">Cambiar Disponibilidad</h2>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h5>Curso</h5>
+                  <select class="seleccionarCurso2" name="cursoSeleccionado2">
+                    <option value="seleccionar">Seleccione un curso</option>
+                    {% for curso in arregloCurso %}
+                      <option value={{curso.id}}>{{curso.nombre}}</option>
+                    {% endfor %}
+                  </select>
+                  <select id="id_dia2" class="seleccionarDia" name="diaSeleccionado2"></select>
+                </div>
+                <div class="col-sm-6">
+                  <h5>Semana</h5>
+                  <select class="semana" name="semanaSeleccionada2">
+                    <option value="seleccion">Selecciona una semana</option>
+                    <option value="1">Semana 1</option>
+                    <option value="2">Semana 2</option>
+                    <option value="3">Semana 3</option>
+                    <option value="4">Semana 4</option>
+                    <option value="5">Semana 5</option>
+                    <option value="6">Semana 6</option>
+                    <option value="7">Semana 7</option>
+                    <option value="8">Semana 8</option>
+                    <option value="9">Semana 9</option>
+                    <option value="10">Semana 10</option>
+                    <option value="11">Semana 11</option>
+                    <option value="12">Semana 12</option>
+                    <option value="13">Semana 13</option>
+                    <option value="14">Semana 14</option>
+                    <option value="15">Semana 15</option>
+                    <option value="16">Semana 16</option>
+                  </select>
+                  <br>
+                  <br>
+                  <button class="btn btn-primary" type="submit" name="cambiarDisponibilidad">Cambiar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </tr>
+    </form>
+
+
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript">
+    $('.seleccionarCurso').each(function(i, obj) {
+      //test
+
+    $(this).change(function (event) {
+      console.log($(this).val() );
+      var curso=$(this).val()
+      $.ajax({
+           url: 'validate_dia',
+           data: {
+             'curso': curso
+           },
+           dataType: 'json',
+           success: function (data) {
+             var dias = JSON.parse(data.dias);
+
+              var $el = $("#id_dia");
+              $el.empty(); // remove old options
+              $el.append($("<option></option>")
+                 .attr("value", "seleccionandoDia").text("Seleccione un dia"));
+              $.each(dias, function(key,value) {
+                $el.append($("<option></option>")
+                   .attr("value", value).text(value));
+              });
+           }
+         });
+       });
+    });
+
+    $('.seleccionarCurso2').each(function(i, obj) {
+      //test
+
+    $(this).change(function (event) {
+      console.log($(this).val() );
+      var curso=$(this).val()
+      $.ajax({
+           url: 'validate_dia',
+           data: {
+             'curso': curso
+           },
+           dataType: 'json',
+           success: function (data) {
+             var dias = JSON.parse(data.dias);
+
+              var $el = $("#id_dia2");
+              $el.empty(); // remove old options
+              $el.append($("<option></option>")
+                 .attr("value", "seleccionandoDia").text("Seleccione un dia"));
+              $.each(dias, function(key,value) {
+                $el.append($("<option></option>")
+                   .attr("value", value).text(value));
+              });
+           }
+         });
+       });
+    });
+    </script>
+
+    </body>
+</html>

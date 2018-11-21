@@ -1,0 +1,173 @@
+{% extends 'index.html' %}
+{% block javascript %}
+<script>
+
+var token = '{{csrf_token}}';
+$( document ).ready(function() {
+
+  $("#id_curso").change(function () {
+
+    console.log($(this).val() );
+    var curso=$(this).val()
+
+    $.ajax({
+      url: 'validate_curso',
+      data: {
+        'curso': curso
+      },
+      dataType: 'json',
+      success: function (data) {
+        var profes = JSON.parse(data.profesores);
+
+        var $el = $("#id_profesor");
+        $el.empty(); // remove old options
+        $el.append($("<option></option>")
+        .attr("value", "Seleccione un profesor").text("Seleccione un profesor"));
+        $.each(profes, function(key,value) {
+          $el.append($("<option></option>")
+          .attr("value", value).text(value));
+        });
+      }
+    });
+  });
+})
+  $("#id_profesor").change(function () {
+    console.log($(this).val() );
+    var profesor=$(this).val();
+    var curso=$("#id_curso").val()
+    profe=profesor.split(" ")
+    console.log("hollaaa  "+profe[1]);
+    $.ajax({
+      url: 'validate_profesor',
+      data: {
+        'first': profe[0],
+        'last': profe[1],
+        'curso':curso
+      },
+      dataType: 'json',
+      success: function (data) {
+
+        var secciones=JSON.parse(data.seccion)
+        /*console.log(secciones[0]);*/
+        console.log();
+        var $el = $("#id_seccion");
+        $el.empty(); // remove old options
+        $.each(secciones, function(key,value) {
+          $el.append($("<option></option>")
+          .attr("value", value).text(value));
+        });
+
+      }
+    });
+  });
+    </script>
+    {% endblock %}
+{% block content %}
+<div id="agregarAsesoriaCont" class="container">
+  <div class="row justify-content-center">
+    <div class="col-4">
+      <div class="card">
+        <h4 class="card-header text-center">Editar Asesoria</h4>
+        <div class="card-block">
+          <form method="post" action="actualizarAsesoria">
+            <input hidden type="text" name="id_asesoria" value="{{id}}">
+            <input hidden type="text" name="id_fact" value="{{fact_id}}">
+            {% csrf_token %}
+            <div class="form-group">
+              <label>Curso:</label>
+              <select name="curso" id="id_curso" class="form-group has-danger">
+
+                {% for item in cursos %}
+                  {% ifequal item.nombre curso%}
+                <option selected="True" type="submit" value="{{item.nombre}}">{{item.nombre}}</option>
+                {%else%}
+                <option type="submit" value="{{item.nombre}}">{{item.nombre}}</option>
+                {%endifequal%}
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Profesor:</label>
+              <select name="profesor"  id="id_profesor" class="form-group has-danger">
+                <option type="submit" value="{{profesor}}">{{profesor}} {{profesor2}}</option>
+
+              </select>
+
+
+            </div>
+            <div class="form-group">
+              <label>Seccion:</label>
+              <select name="seccion" id="id_seccion"class="form-group has-danger">
+
+                <option type="submit" value="{{seccion}}">{{seccion}}</option>
+
+              </select>
+
+            </div>
+            <div class="form-group">
+              <label>Horario:</label>
+              <input name="horario" value="{{horario}}"type="text" class="form-control">
+
+            </div>
+            <div class="form-group">
+              <label>Lugar:</label>
+              <input name="lugar" type="text" value="{{lugar}}" class="form-control">
+
+            </div>
+            <div class="form-group">
+              <input hidden type="text" name=dias value={{dia}}>
+              <label>Día:</label>
+              <select  name="dia" select class="form-group has-danger" >
+                {% if  dia|lower == "lunes" %}
+                <option disabled selected="True" value="lunes">lunes</option>
+                {%else%}
+                <option  disabled value="lunes">lunes</option>
+                {%endif%}
+                {% if  dia|lower == "martes" %}
+                <option disabled selected="True" value="martes">martes</option>
+                {%else%}
+                <option disabled value="martes">martes</option>
+                {%endif%}
+                {% if  dia|lower == "miercoles" %}
+                <option disabled selected="True" value="miercoles">miercoles</option>
+                {%else%}
+                <option  disabled value="miercoles">miercoles</option>
+                {%endif%}
+                {% if  dia|lower == "jueves" %}
+                <option disabled selected="True" value="jueves">jueves</option>
+                {%else%}
+                <option disabled value="jueves">jueves</option>
+                {%endif%}
+                {% if  dia|lower == "viernes" %}
+                <option disabled selected="True" value="viernes">viernes</option>
+                {%else%}
+                <option disabled value="viernes">viernes</option>
+                {%endif%}
+                {% if  dia|lower == "sabado" %}
+                <option disabled selected="True" value="sabado">sabado</option>
+                {%else%}
+                <option disabled value="sabado">sabado</option>
+                {%endif%}
+
+              </select>
+            </div>
+            <div class="">
+
+            {% ifequal errorRep 0 %}
+            <p style="color: red;">
+            La asesoria ya existe
+          </p>
+          {% endifequal %}
+        </div>
+            <div class="mx-auto text-center">
+              <input id="submitAsesoria"type="submit" value="Actualizar" class="btn btn-primary">
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

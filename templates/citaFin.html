@@ -1,0 +1,162 @@
+{% load static %}<!DOCTYPE html>
+<html  >
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Vista de Profesor{% endblock %}</title>
+  <link href="https://fonts.googleapis.com/css?family=Peralta" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+  crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"/>
+  <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<body>
+  <div id="finCita"  class="">
+            {% csrf_token %}
+    <div >
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="">Bienvenido, {{ nombreProfesor.first_name }} {{ nombreProfesor.last_name}}</a>
+      <input type= "hidden" name="id_prof" value= {{ nombreProfesor.id }}>
+    </div>
+    <p></p>
+    <div align="center">
+      <h2>Citas Finalizadas</h2>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div>
+      <form action="/logout" method="post">
+      {% csrf_token %}
+        <button type="submit" name="logout" class="btn btn-danger">Logout</button>
+      </form>
+      <form action="/busquedaProfesor" method="POST">
+        {% csrf_token %}
+        <input type="text" name="buscar" >
+        <button type="submit" class="btn">Search</button>
+      </form>
+      <form action="/citasFinVista" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn">Reset</button>
+      </form>
+    </div>
+
+    <div align="right">
+      <form action="/regresarVistaProfe" method='get'>
+      {% csrf_token %}
+        <button class="btn btn-warning" type="submit" name="regresarVistaProfe">Regresar</button>
+      </form>
+    </div>
+    <p></p>
+<input type= "hidden" id="tipoOrd" value="asc">
+  <table class="table">
+    <thead class="thead-inverse">
+      <tr>
+        <th></th>
+        <th>Curso</th>
+        <th>Alumno</th>
+        <th>Horario</th>
+        <th>Lugar</th>
+        <th>Día</th>
+        <th>Sección</th>
+        <th>Fecha &nbsp<i  id="ordenar" value="-" class="fa fa-sort" style="font-size:18px;color:white"></i></th>
+        <th>Operación</th>
+      </tr>
+    </thead>
+    <tbody id="tabla">
+      {% for item in arreglo %}
+          <tr >
+            <th><input type= "hidden" name="id_cita" value= {{ item.id }}></th>
+            <th>{{ item.curso }}</th>
+            <th>{{ item.alumno }}</th>
+            <th>{{ item.horario }}</th>
+            <th>{{ item.lugar }}</th>
+            <th>{{ item.dia }}</th>
+            <th>{{ item.seccion }}</th>
+            <th>{{ item.fechaCita|date:'d-m-Y' }}</th>
+            <th>
+            <a href="#" data-toggle="modal" data-target="#{{item.id}}"> Ver detalle <i class="fa fa-pencil-square-o"></i> </a>
+            </th>
+              </tr>
+      {% endfor %}
+
+
+    {% for item in arreglo %}
+      <form class="" action="/feedback" method="post">
+      {% csrf_token %}
+      <div class="modal fade" id="{{item.id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title">Detalle de Cita Atendida</h2>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-sm-6">
+                      <h5>Comentario del alumno</h5>
+
+                      <textarea rows="4" cols="40" disabled> {{item.comentario }} </textarea>
+
+                      {% ifequal item.archivo 0 %}
+                        {% csrf_token %}
+                        <br>
+                        <a>No hay archivo</a>
+
+                      {%else%}
+                      {% csrf_token %}
+                      <br>
+                       <a href="{{ item.archivo }}">Descargar Archivo<i class="fa fa-cloud-download"></i></a>
+
+                      {% endifequal %}  
+
+                  </div>
+                  <div class="col-sm-6">
+                    <h5>Feedback</h5>
+                    <textarea disabled name="feedback" rows="4" cols="40">{{item.feedback }}</textarea>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+</div>
+</div>
+<script type="text/javascript">
+$("#ordenar").click(function () {
+
+  var tipoOrd=document.getElementById('tipoOrd').value
+  console.log(tipoOrd);
+
+    $.ajax({
+
+         type:"POST",
+         url: 'ordenar_citas_finalizadas',
+         data: {
+           'tipoOrd': tipoOrd,
+           'csrfmiddlewaretoken': '{{ csrf_token }}'
+         },
+         success : function(data) {
+
+             $('#finCita').html(data);
+             var cambio=document.getElementById('tipoOrd')
+             cambio.value="desc"
+         }
+       });
+     });
+</script>
+
+</body>
+</html>

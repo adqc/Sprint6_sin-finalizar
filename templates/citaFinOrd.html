@@ -1,0 +1,149 @@
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="">Bienvenido, {{ nombreProfesor.first_name }} {{ nombreProfesor.last_name}}</a>
+    <input type= "hidden" name="id_prof" value= {{ nombreProfesor.id }}>
+  </div>
+  <p></p>
+  <div align="center">
+    <h2>Citas Finalizadas</h2>
+  </div>
+</nav>
+
+<div class="container">
+  <div>
+    <form action="/logout" method="post">
+    {% csrf_token %}
+      <button type="submit" name="logout" class="btn btn-danger">Logout</button>
+    </form>
+    <form action="/busquedaProfesor" method="POST">
+      {% csrf_token %}
+      <input type="text" name="buscar" >
+      <button type="submit" class="btn">Search</button>
+    </form>
+    <form action="/citasFinVista" method="POST">
+      {% csrf_token %}
+      <button type="submit" class="btn">Reset</button>
+    </form>
+  </div>
+
+  <div align="right">
+    <form action="/regresarVistaProfe" method='get'>
+    {% csrf_token %}
+      <button class="btn btn-warning" type="submit" name="regresarVistaProfe">Regresar</button>
+    </form>
+  </div>
+  <p></p>
+<input type= "hidden" id="tipoOrd" value="{{tipoOrd}}">
+<table class="table">
+  <thead class="thead-inverse">
+    <tr>
+      <th></th>
+      <th>Curso</th>
+      <th>Alumno</th>
+      <th>Horario</th>
+      <th>Lugar</th>
+      <th>Día</th>
+      <th>Sección</th>
+      <th>Fecha &nbsp<i  id="ordenar" value="-" class="fa fa-sort" style="font-size:18px;color:white"></i></th>
+      <th>Operación</th>
+    </tr>
+  </thead>
+  <tbody id="tabla">
+    {% for item in arreglo %}
+        <tr >
+          <th><input type= "hidden" name="id_cita" value= {{ item.id }}></th>
+          <th>{{ item.curso }}</th>
+          <th>{{ item.alumno }}</th>
+          <th>{{ item.horario }}</th>
+          <th>{{ item.lugar }}</th>
+          <th>{{ item.dia }}</th>
+          <th>{{ item.seccion }}</th>
+          <th>{{ item.fechaCita|date:'d-m-Y' }}</th>
+          <th>
+          <a href="#" data-toggle="modal" data-target="#{{item.id}}"> Ver detalle <i class="fa fa-pencil-square-o"></i> </a>
+          </th>
+            </tr>
+    {% endfor %}
+
+
+  {% for item in arreglo %}
+    <form class="" action="/feedback" method="post">
+    {% csrf_token %}
+    <div class="modal fade" id="{{item.id}}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title">Detalle de Cita Atendida</h2>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-6">
+                    <h5>Comentario del alumno</h5>
+
+                    <textarea rows="4" cols="40" disabled> {{item.comentario }} </textarea>
+
+                    {% ifequal item.archivo 0 %}
+                      {% csrf_token %}
+                      <br>
+                      <a>No hay archivo</a>
+
+                    {%else%}
+                    {% csrf_token %}
+                    <br>
+                     <a href="{{ item.archivo }}">Descargar Archivo<i class="fa fa-cloud-download"></i></a>
+
+                    {% endifequal %}
+
+                </div>
+                <div class="col-sm-6">
+                  <h5>Feedback</h5>
+                  <textarea disabled name="feedback" rows="4" cols="40">{{item.feedback }}</textarea>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+    {% endfor %}
+  </tbody>
+</table>
+
+</div>
+</div>
+</div>
+<script type="text/javascript">
+$("#ordenar").click(function () {
+
+  var tipoOrd=document.getElementById('tipoOrd').value
+  console.log(tipoOrd);
+
+    $.ajax({
+
+         type:"POST",
+         url: 'ordenar_citas_finalizadas',
+         data: {
+           'tipoOrd': tipoOrd,
+           'csrfmiddlewaretoken': '{{ csrf_token }}'
+         },
+         success : function(data) {
+
+             $('#finCita').html(data);
+             var cambio=document.getElementById('tipoOrd')
+             console.log("cambio: "+ cambio.value);
+             if (cambio.value=="asc" || cambio.value=="-"){
+                cambio.value="desc"}
+             else{
+                cambio.value="asc"}
+         }
+       });
+     });
+</script>
+
+</body>
