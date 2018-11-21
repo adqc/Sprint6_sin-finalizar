@@ -6,7 +6,7 @@ from accounts.models import User
 from accounts.views import crearCita
 from django.test.client import Client
 
-    
+
 
 
 class Views_test(TestCase):
@@ -38,7 +38,7 @@ class Views_test(TestCase):
         seccion=Seccion.objects.get(codigo=801)
         dia="lunes"
         lugar="TA 802"
-        horario="11-12"
+        horario="11-12"  
         self.assertTrue(validarAsesoria(dia,horario,lugar,seccion))
         self.assertFalse(validarAsesoria(dia,"10-11",lugar,seccion))
     def test_crearCita(self):
