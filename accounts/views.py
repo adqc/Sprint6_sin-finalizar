@@ -238,7 +238,10 @@ def uploadFiles(idCita,file):
     url=u['url']
     result = cloudinary.Search().expression('public_id='+nomFin+'').execute()
     return nomFin
-
+def crearCita(alumno,asesoria,comentario,estado,fechaCita):
+    cita= Cita.objects.create(alumno_id= alumno, asesoria_id=asesoria,comentario=comentario, estado=estado,fechaCita=fechaCita)
+    cita.save()
+    return True
 def generarCita(request):
     arrFechas=[]
     arrFechas=mostrarFechas(2018,0)
@@ -258,8 +261,9 @@ def generarCita(request):
         errorFecha=0
         return redirect('/alumnoCitaError')
     else:
-        cita= Cita.objects.create(alumno_id= request.session['id'], asesoria_id=request.POST['id_asesoria'],comentario=request.POST['comentario'], estado=True,fechaCita=val)
-        cita.save()
+        #cita= Cita.objects.create(alumno_id= request.session['id'], asesoria_id=request.POST['id_asesoria'],comentario=request.POST['comentario'], estado=True,fechaCita=val)
+        #cita.save()
+        crearCita(request.session['id'],request.POST['id_asesoria'],request.POST['comentario'],True,val)
     if file==False:# si es que no hay archivo
         print("No se grabo")
     else:
