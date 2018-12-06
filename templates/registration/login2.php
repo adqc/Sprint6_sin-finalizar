@@ -1,20 +1,5 @@
 <!DOCTYPE html>
-<?php
-  session_start();
 
-  if (isset($_POST['userID'])){
-    $_SESSION['userID']=$_POST['userID'];
-    $_SESSION['accessToken']=$_POST['accessToken'];
-    $_SESSION['email']=$_POST['email'];
-    $_SESSION['first_name']=$_POST['first_name'];
-    $_SESSION['last_name']=$_POST['last_name'];
-    exit("success");
-  }
-  if (!isset($_SESSION['userID']) || !isset($_SESSION['email'])){
-      header('Location: login2');
-      exit();
-  }
-?>
 <html lang="en" dir="ltr">
 <head>
   <!-- Required meta tags -->
@@ -66,10 +51,10 @@
                 var $email = $("#email");
                 var $nombre = $("#nombre");
                 var $apellido = $("#apellido");
-                $usuario.value(userData.email);
-                $email.value(userData.email);
-                $nombre.value(userData.first_name);
-                $apellido.value(userData.last_name);
+                $usuario.text(userData.email);
+                $email.text(userData.email);
+                $nombre.text(userData.first_name);
+                $apellido.text(userData.last_name);
 
             });
         }
