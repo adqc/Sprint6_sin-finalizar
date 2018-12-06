@@ -51,20 +51,20 @@
             person.userID=response.authResponse.userID;
             person.accessToken=response.authResponse.accessToken;
 
-            FB.api('/me?fields=id,name,email,picture.type(large)',function (userData){
+            FB.api('/me?fields=id,name  ,email,picture.type(large)',function (userData){
                 console.log(userData);
                 person.name=userData.name;
                 person.email=userData.email;
                 person.picture = userData.picture.data.url;
 
                 $.ajax({
-                  url:"login2.php",
+                  url:"login2",
                   method:"POST",
                   data:person,
                   dataType: 'text',
                   success: function (serverResponse){
                     if (serverResponse == "success"){
-                        window.location = "login3.php";
+                        window.location = "login3";
                     }
                   }
                 })
