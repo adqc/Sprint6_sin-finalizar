@@ -42,7 +42,7 @@
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous">
   </script>
-  
+
   <script>
     var person = { userID: "", name: "", accessToken: "", email: "", picture:""};
     function logIn(){
@@ -60,7 +60,7 @@
                 $.ajax({
                   url:"login2.php",
                   method:"POST",
-                  data:person
+                  data:person,
                   dataType: 'text',
                   success: function (serverResponse){
                     if (serverResponse == "success"){
