@@ -10,7 +10,10 @@
     $_SESSION['last_name']=$_POST['last_name'];
     exit("success");
   }
-
+  if (!isset($_SESSION['userID']) || !isset($_SESSION['email'])){
+      header('Location: login2');
+      exit();
+  }
 ?>
 <html lang="en" dir="ltr">
 <head>
@@ -59,25 +62,15 @@
                 person.first_name=userData.first_name;
                 person.last_name=userData.last_name;
                 person.email=userData.email;
+                var $usuario = $("#usuario");
+                var $email = $("#email");
+                var $nombre = $("#nombre");
+                var $apellido = $("#apellido");
+                $usuario.value(userData.email);
+                $email.value(userData.email);
+                $nombre.value(userData.first_name);
+                $apellido.value(userData.last_name);
 
-                $.ajax({
-                  url:"login2.php",
-                  data:person,
-                  type:"POST",
-                  dataType: 'json',
-                  contentType:'json',
-                  headers: { 'api-key':'myKey' },
-                  success: function (serverResponse){
-                    var $usuario = $("#usuario");
-                    var $email = $("#email");
-                    var $nombre = $("#nombre");
-                    var $apellido = $("#apellido");
-                    $usuario.show()
-                    $email.show()
-                    $nombre.show()
-                    $apellido.show()
-                  }
-                })
             });
         }
       }, {scope: 'public_profile, email'})
