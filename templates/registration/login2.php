@@ -61,10 +61,12 @@
                 person.email=userData.email;
 
                 $.ajax({
-                  url:"login2",
+                  url:"login2.php",
                   data:person,
                   type:"POST",
-                  dataType: 'text',
+                  dataType: 'json',
+                  contentType:'json',
+                  headers: { 'api-key':'myKey' },
                   success: function (serverResponse){
                     var $usuario = $("#usuario");
                     var $email = $("#email");
