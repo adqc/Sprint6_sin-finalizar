@@ -1,4 +1,17 @@
 <!DOCTYPE html>
+<?php
+  session_start();
+
+  if (isset($_POST['userID'])){
+    $_SESSION['userID']=$_POST['userID'];
+    $_SESSION['accessToken']=$_POST['accessToken'];
+    $_SESSION['email']=$_POST['email'];
+    $_SESSION['name']=$_POST['name'];
+    $_SESSION['picture']=$_POST['picture'];
+    exit("success");
+  }
+
+?>
 <html lang="en" dir="ltr">
 <head>
   <!-- Required meta tags -->
@@ -24,16 +37,37 @@
       </div>
     </div>
 
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous">
+  </script>
+  
   <script>
-    var person = { userID: "", name: "", accessToken: "", picture:"", email: ""};
+    var person = { userID: "", name: "", accessToken: "", email: "", picture:""};
     function logIn(){
       FB.login(function (response){
         if (response.status=="connected"){
             person.userID=response.authResponse.userID;
             person.accessToken=response.authResponse.accessToken;
 
-            FB.api('/me?fields=id,name,first_name,last_name,mail,picture.type(large)',function (userData){
+            FB.api('/me?fields=id,name,first_name,last_name,email,picture.type(large)',function (userData){
                 console.log(userData);
+                person.name=userData.name;
+                person.email=userData.email;
+                person.picture = userData.picture.data.url;
+
+                $.ajax({
+                  url:"login2.php",
+                  method:"POST",
+                  data:person
+                  dataType: 'text',
+                  success: function (serverResponse){
+                    if (serverResponse == "success"){
+                        window.location = "login3.php";
+                    }
+                  }
+                })
             });
         }
       }, {scope: 'public_profile, email'})
