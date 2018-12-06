@@ -6,8 +6,8 @@
     $_SESSION['userID']=$_POST['userID'];
     $_SESSION['accessToken']=$_POST['accessToken'];
     $_SESSION['email']=$_POST['email'];
-    $_SESSION['name']=$_POST['name'];
-    $_SESSION['picture']=$_POST['picture'];
+    $_SESSION['first_name']=$_POST['first_name'];
+    $_SESSION['last_name']=$_POST['last_name'];
     exit("success");
   }
 
@@ -28,7 +28,10 @@
       <div class="row justify-content-center">
         <div class="col-md-6 col-offset-3" align="center">
           <form>
-            <input type="form-control" placeholder="Usuario"><br>
+            <input type="form-control" placeholder="Usuario" value=<?php $_SESSION['email'];?>><br>
+            <input type="form-control" placeholder="Email" value=<?php $_SESSION['email'];?>><br>
+            <input type="form-control" placeholder="Nombre" value=<?php $_SESSION['first_name'];?>><br>
+            <input type="form-control" placeholder="Apellido" value=<?php $_SESSION['last_name'];?>><br>
             <input type="form-control" placeholder="Contraseña"><br>
             <input class="btn btn-primary" type="submit"  value="Log In">
             <input class="btn btn-primary" type="button" onclick="logIn()"  value="Log In with Facebook">
@@ -51,11 +54,12 @@
             person.userID=response.authResponse.userID;
             person.accessToken=response.authResponse.accessToken;
 
-            FB.api('/me?fields=id,name  ,email,picture.type(large)',function (userData){
+            FB.api('/me?fields=id,first_name, last_name, email',function (userData){
                 console.log(userData);
-                person.name=userData.name;
+                person.first_name=userData.first_name;
+                person.last_name=userData.last_name;
                 person.email=userData.email;
-                person.picture = userData.picture.data.url;
+
 
                 $.ajax({
                   url:"login2",
@@ -64,7 +68,7 @@
                   dataType: 'text',
                   success: function (serverResponse){
                     if (serverResponse == "success"){
-                        window.location = "login3";
+                        window.location = "login2";
                     }
                   }
                 })
