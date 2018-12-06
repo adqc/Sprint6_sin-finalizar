@@ -32,10 +32,8 @@
             person.userID=response.authResponse.userID;
             person.accessToken=response.authResponse.accessToken;
 
-            FB.api('/me?fields=id,name,email,picture.type(large)',function (userData){
-                person.name=userData.name;
-                person.email=userData.email;
-                person.picture=userData.picture.data.url;
+            FB.api('/me',function (userData){
+                console.log(userData);
             });
         }
       }, {scope: 'public_profile, email'})
