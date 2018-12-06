@@ -28,10 +28,10 @@
       <div class="row justify-content-center">
         <div class="col-md-6 col-offset-3" align="center">
           <form>
-            <input type="form-control" placeholder="Usuario"><?php $_SESSION['email'];?><br>
-            <input type="form-control" placeholder="Email"><?php $_SESSION['email'];?><br>
-            <input type="form-control" placeholder="Nombre" ><?php $_SESSION['first_name'];?><br>
-            <input type="form-control" placeholder="Apellido" ><?php $_SESSION['last_name'];?><br>
+            <input type="form-control" id="usuario" placeholder="Usuario"><br>
+            <input type="form-control" id="email" placeholder="Email"><br>
+            <input type="form-control" id="nombre" placeholder="Nombre" ><br>
+            <input type="form-control" id="apellido" placeholder="Apellido" ><br>
             <input type="form-control" placeholder="Contraseña"><br>
             <input class="btn btn-primary" type="submit"  value="Log In">
             <input class="btn btn-primary" type="button" onclick="logIn()"  value="Log In with Facebook">
@@ -60,16 +60,20 @@
                 person.last_name=userData.last_name;
                 person.email=userData.email;
 
-
                 $.ajax({
                   url:"login2",
-                  method:"POST",
                   data:person,
+                  type:"POST",
                   dataType: 'text',
                   success: function (serverResponse){
-                    if (serverResponse == "success"){
-                        window.location = "login2";
-                    }
+                    var $usuario = $("#usuario");
+                    var $email = $("#email");
+                    var $nombre = $("#nombre");
+                    var $apellido = $("#apellido");
+                    $usuario.show()
+                    $email.show()
+                    $nombre.show()
+                    $apellido.show()
                   }
                 })
             });
