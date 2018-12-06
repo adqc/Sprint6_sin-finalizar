@@ -38,6 +38,9 @@ def index(request):
 def login2(request):
     return render(request, 'registration/login2.php')
 
+def login3(request):
+    return render(request, 'registration/login3.php')    
+
 def registro(request):
     return render(request, 'registration/registro.html')
 
