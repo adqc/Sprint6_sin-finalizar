@@ -28,10 +28,10 @@
       <div class="row justify-content-center">
         <div class="col-md-6 col-offset-3" align="center">
           <form>
-            <input type="form-control" placeholder="Usuario" value=<?php $_SESSION['email'];?>><br>
-            <input type="form-control" placeholder="Email" value=<?php $_SESSION['email'];?>><br>
-            <input type="form-control" placeholder="Nombre" value=<?php $_SESSION['first_name'];?>><br>
-            <input type="form-control" placeholder="Apellido" value=<?php $_SESSION['last_name'];?>><br>
+            <input type="form-control" placeholder="Usuario"><?php $_SESSION['email'];?><br>
+            <input type="form-control" placeholder="Email"><?php $_SESSION['email'];?><br>
+            <input type="form-control" placeholder="Nombre" ><?php $_SESSION['first_name'];?><br>
+            <input type="form-control" placeholder="Apellido" ><?php $_SESSION['last_name'];?><br>
             <input type="form-control" placeholder="Contraseña"><br>
             <input class="btn btn-primary" type="submit"  value="Log In">
             <input class="btn btn-primary" type="button" onclick="logIn()"  value="Log In with Facebook">
