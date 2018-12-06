@@ -35,6 +35,9 @@ def index(request):
     agregar = 0
     return render(request, 'registration/login.html')
 
+def login2(request):
+    return render(request, 'registration/login2.php')
+
 def registro(request):
     return render(request, 'registration/registro.html')
 
@@ -259,7 +262,7 @@ def generarCita(request):
     elif (Cita.objects.filter(alumno_id=request.session['id'],fechaCita=request.POST['fecha_pactada'], asesoria_id=request.POST['id_asesoria'], estado=True).exists()):
         request.session['validate'] = 0
         errorFecha=0
-        return redirect('/alumnoCitaError')   
+        return redirect('/alumnoCitaError')
     else:
         #cita= Cita.objects.create(alumno_id= request.session['id'], asesoria_id=request.POST['id_asesoria'],comentario=request.POST['comentario'], estado=True,fechaCita=val)
         #cita.save()

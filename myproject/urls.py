@@ -18,6 +18,7 @@ urlpatterns = [
     #path('index', views.index),
     path('', accounts_views.index),
     path('login', accounts_views.login),
+    path('login2', accounts_views.login2),
     path('buscar', accounts_views.buscar),
     path('profesorVista', accounts_views.vistaProfesor),
     path('alumnoVista', accounts_views.vistaAlumno),
