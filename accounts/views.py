@@ -35,11 +35,11 @@ def index(request):
     agregar = 0
     return render(request, 'registration/login.html')
 
-@csrf_protect
+@csrf_exempt
 def login2(request):
     return render(request, 'registration/login2.php')
 
-@csrf_protect
+@csrf_exempt
 def login3(request):
     return render(request, 'registration/login3.php')
 
