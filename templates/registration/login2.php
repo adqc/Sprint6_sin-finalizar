@@ -31,7 +31,6 @@
       <div class="row justify-content-center">
         <div class="col-md-6 col-offset-3" align="center">
           <form>
-            {% csrf_token %}
             <input type="text" id="usuario" placeholder="Usuario" ><?php $_SESSION['email']; ?><br>
             <input type="text" id="email" placeholder="Email"> <?php $_SESSION['email']; ?><br>
             <input type="text" id="nombre" placeholder="Nombre"> <?php $_SESSION['first_name']; ?><br>
@@ -63,49 +62,6 @@
                 person.last_name=userData.last_name;
                 person.email=userData.email;
 
-            function getCookie(name) {
-                  var cookieValue = null;
-                  if (document.cookie && document.cookie != '') {
-                      var cookies = document.cookie.split(';');
-                      for (var i = 0; i < cookies.length; i++) {
-                          var cookie = jQuery.trim(cookies[i]);
-                          // Does this cookie string begin with the name we want?
-                          if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                              break;
-                          }
-                      }
-                  }
-                      return cookieValue;
-                  }
-                  var csrftoken = getCookie('csrftoken');
-                  console.log(csrftoken);
-
-                  //Ajax call
-                  function csrfSafeMethod(method) {
-                  // these HTTP methods do not require CSRF protection
-                  return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-                  }
-                  $.ajaxSetup({
-                      crossDomain: false, // obviates need for sameOrigin test
-                      beforeSend: function(xhr, settings) {
-                          if (!csrfSafeMethod(settings.type)) {
-                              xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                          }
-                      }
-                  });
-
-                $.ajax({
-                  type:"POST",
-                  url:"login2",
-                  data: person,
-                  dataType: 'text',
-                  success: function (data){
-                    if (data=="success"){
-                      window.location="login2";
-                    }
-                  }
-                })
             });
         }
       }, {scope: 'public_profile, email'})
