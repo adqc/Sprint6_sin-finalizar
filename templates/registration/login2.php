@@ -71,7 +71,7 @@
             console.log("paso");
         }
 
-    })
+    });
     function logIn(){
 
       FB.login(function (response){
