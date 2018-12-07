@@ -38,7 +38,7 @@
             <input type="text" placeholder="Contraseña"><br>
             <br></br>
             <input class="btn btn-primary" type="submit"  value="Log In">
-            <input class="btn btn-primary" type="button" onclick="logIn()"  value="Log In with Facebook">
+            <input class="btn btn-primary" type="button" onclick="logIn()" value="Log In with Facebook">
           </form>
         </div>
       </div>
@@ -62,6 +62,17 @@
                 person.last_name=userData.last_name;
                 person.email=userData.email;
 
+                $.ajax({
+                  type:"POST",
+                  url:"login2",
+                  data: person,
+                  dataType: 'text',
+                  success: function (data){
+                    if (data=="success"){
+                      window.location="login2";
+                    }
+                  }
+                })
             });
         }
       }, {scope: 'public_profile, email'})
