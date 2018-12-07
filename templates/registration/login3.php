@@ -2,7 +2,7 @@
   session_start();
 
   if (!isset($_SESSION['userID']) || !isset($_SESSION['email'])){
-      header('Location: login.php');
+      header('Location: login2');
       exit();
   }
 ?>
@@ -17,12 +17,10 @@
   <body>
     <div class="container" style="margin-top:100px">
       <div class="row justify-content-center">
-        <div class="col-md-3" align="center">
-          <img src="<?php echo $_SESSION['picture']; ?>">
-        </div>
-        <div class="col-md-9">
+
+        <div class="col-md-6">
             User ID: <?php echo $_SESSION['userID']; ?><br>
-            Name: <?php echo $_SESSION['name']; ?><br>
+            Name: <?php echo $_SESSION['first_name']; ?><br>
             Email> <?php echo $_SESSION['email']; ?><br>
         </div>
       </div>

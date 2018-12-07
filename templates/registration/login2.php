@@ -10,10 +10,6 @@
     $_SESSION['last_name']=$_POST['last_name'];
     exit("success");
   }
-  if (!isset($_SESSION['userID']) || !isset($_SESSION['email'])){
-      header('Location: login2');
-      exit();
-  }
 ?>
 <html lang="en" dir="ltr">
 <head>
@@ -70,7 +66,7 @@
                   dataType: 'text',
                   success: function (data){
                     if (data=="success"){
-                      window.location="login2";
+                      window.location="login3";
                     }
                   }
                 })
