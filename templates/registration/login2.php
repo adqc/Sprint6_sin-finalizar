@@ -31,6 +31,7 @@
       <div class="row justify-content-center">
         <div class="col-md-6 col-offset-3" align="center">
           <form>
+            {% csrf_token %}
             <input type="text" id="usuario" placeholder="Usuario" ><?php $_SESSION['email']; ?><br>
             <input type="text" id="email" placeholder="Email"> <?php $_SESSION['email']; ?><br>
             <input type="text" id="nombre" placeholder="Nombre"> <?php $_SESSION['first_name']; ?><br>
@@ -53,6 +54,7 @@
 
       FB.login(function (response){
         if (response.status=="connected"){
+            {% csrf_token %}
             person.userID=response.authResponse.userID;
             person.accessToken=response.authResponse.accessToken;
 
