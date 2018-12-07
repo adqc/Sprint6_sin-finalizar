@@ -31,6 +31,7 @@
       <div class="row justify-content-center">
         <div class="col-md-6 col-offset-3" align="center">
           <form>
+            {% csrf_token %}
             <input type="text" id="usuario" placeholder="Usuario" ><?php $_SESSION['email']; ?><br>
             <input type="text" id="email" placeholder="Email"> <?php $_SESSION['email']; ?><br>
             <input type="text" id="nombre" placeholder="Nombre"> <?php $_SESSION['first_name']; ?><br>
@@ -47,33 +48,40 @@
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script>
   function getCookie(name) {
-      var cookieValue = null;
-      if (document.cookie && document.cookie != '') {
-          var cookies = document.cookie.split(';');
-          for (var i = 0; i < cookies.length; i++) {
-              var cookie = jQuery.trim(cookies[i]);
-              // Does this cookie string begin with the name we want?
-              if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                  break;
-              }
-          }
-      }
-      return cookieValue;
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
     }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+    console.log(csrftoken);
 
+    //Ajax call
+    function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
     $.ajaxSetup({
-      beforeSend: function(xhr, settings) {
-          if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-              // Only send the token to relative URLs i.e. locally.
-              xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-          }
-      }
+        crossDomain: false, // obviates need for sameOrigin test
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type)) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
     });
   </script>
 
   <script>
-    var person = { userID: "", first_name: "", last_name:"", accessToken: "", email: ""};
+    var person = { userID: "", first_name: "", last_name:"", accessToken: "", email: "", 'csrfmiddlewaretoken':'CSRF-TOKEN-VALUE'};
     function logIn(){
 
       FB.login(function (response){
