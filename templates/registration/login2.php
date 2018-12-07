@@ -44,7 +44,7 @@
       </div>
     </div>
 
-  <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
   <script>
     var person = { userID: "", name: "", accessToken: "", email: "", picture:""};
