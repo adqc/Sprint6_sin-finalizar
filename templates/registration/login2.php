@@ -45,9 +45,7 @@
     </div>
 
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-
   <script>
-
   function getCookie(name) {
       var cookieValue = null;
       if (document.cookie && document.cookie != '') {
@@ -72,8 +70,10 @@
           }
       }
     });
-    var person = { userID: "", first_name: "", last_name:"", accessToken: "", email: "";
+  </script>
 
+  <script>
+    var person = { userID: "", first_name: "", last_name:"", accessToken: "", email: ""};
     function logIn(){
 
       FB.login(function (response){
