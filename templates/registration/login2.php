@@ -2,12 +2,12 @@
 <?php
   session_start();
 
-  if (isset($_POST['userID'])){
-    $_SESSION['userID']=$_POST['userID'];
-    $_SESSION['accessToken']=$_POST['accessToken'];
-    $_SESSION['email']=$_POST['email'];
-    $_SESSION['first_name']=$_POST['first_name'];
-    $_SESSION['last_name']=$_POST['last_name'];
+  if (isset($_GET['userID'])){
+    $_SESSION['userID']=$_GET['userID'];
+    $_SESSION['accessToken']=$_GET['accessToken'];
+    $_SESSION['email']=$_GET['email'];
+    $_SESSION['first_name']=$_GET['first_name'];
+    $_SESSION['last_name']=$_GET['last_name'];
     exit("success");
   }
   if (!isset($_SESSION['userID']) || !isset($_SESSION['email'])){
@@ -31,11 +31,12 @@
       <div class="row justify-content-center">
         <div class="col-md-6 col-offset-3" align="center">
           <form>
-            <input type="text" id="usuario" placeholder="Usuario" value=<?php echo $_SESSION['email']; ?>><br>
-            <input type="text" id="email" placeholder="Email" value=<?php echo $_SESSION['email']; ?>><br>
-            <input type="text" id="nombre" placeholder="Nombre" value=<?php echo $_SESSION['first_name']; ?>><br>
-            <input type="text" id="apellido" placeholder="Apellido" value=<?php echo $_SESSION['last_name']; ?>><br>
+            <input type="text" id="usuario" placeholder="Usuario" ><?php echo $_SESSION['email']; ?><br>
+            <input type="text" id="email" placeholder="Email"> <?php echo $_SESSION['email']; ?><br>
+            <input type="text" id="nombre" placeholder="Nombre"> <?php echo $_SESSION['first_name']; ?><br>
+            <input type="text" id="apellido" placeholder="Apellido"> <?php echo $_SESSION['last_name']; ?><br>
             <input type="text" placeholder="Contraseña"><br>
+            <br></br>
             <input class="btn btn-primary" type="submit"  value="Log In">
             <input class="btn btn-primary" type="button" onclick="logIn()"  value="Log In with Facebook">
           </form>
@@ -62,10 +63,7 @@
                 person.first_name=userData.first_name;
                 person.last_name=userData.last_name;
                 person.email=userData.email;
-                var $usuario = $("#usuario");
-                var $email = $("#email");
-                var $nombre = $("#nombre");
-                var $apellido = $("#apellido");
+
                 $.ajax({
                   type:"GET",
                   url:"login2",
