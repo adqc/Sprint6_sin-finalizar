@@ -2,12 +2,12 @@
 <?php
   session_start();
 
-  if (isset($_POST['userID'])){
-    $_SESSION['userID']=$_POST['userID'];
-    $_SESSION['accessToken']=$_POST['accessToken'];
-    $_SESSION['email']=$_POST['email'];
-    $_SESSION['first_name']=$_POST['first_name'];
-    $_SESSION['last_name']=$_POST['last_name'];
+  if (isset($_GET['userID'])){
+    $_SESSION['userID']=$_GET['userID'];
+    $_SESSION['accessToken']=$_GET['accessToken'];
+    $_SESSION['email']=$_GET['email'];
+    $_SESSION['first_name']=$_GET['first_name'];
+    $_SESSION['last_name']=$_GET['last_name'];
     exit("success");
   }
   if (!isset($_SESSION['userID']) || !isset($_SESSION['email'])){
@@ -64,7 +64,7 @@
                 person.email=userData.email;
 
                 $.ajax({
-                  type:"POST",
+                  type:"GET",
                   url:"login2",
                   data: person,
                   dataType: 'text',
