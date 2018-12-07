@@ -47,7 +47,7 @@
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
   <script>
-    var person = { userID: "", name: "", accessToken: "", email: "", picture:""};
+    var person = { userID: "", name: "", accessToken: "", email: "", picture:"", 'csrfmiddlewaretoken':'CSRF-TOKEN-VALUE'};
     function logIn(){
       FB.login(function (response){
         if (response.status=="connected"){
@@ -63,7 +63,7 @@
                 $.ajax({
                   type:"POST",
                   url:"login2",
-                  data:person,
+                  data: person,
                   dataType: 'text',
                   success: function (data){
                     if (data=="success"){
