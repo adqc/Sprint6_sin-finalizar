@@ -31,6 +31,7 @@
       <div class="row justify-content-center">
         <div class="col-md-6 col-offset-3" align="center">
           <form>
+          {% csrf_token %}
             <input type="text" id="usuario" placeholder="Usuario" ><?php $_SESSION['email']; ?><br>
             <input type="text" id="email" placeholder="Email"> <?php $_SESSION['email']; ?><br>
             <input type="text" id="nombre" placeholder="Nombre"> <?php $_SESSION['first_name']; ?><br>
@@ -47,8 +48,9 @@
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
   <script>
-    var person = { userID: "", first_name: "", last_name:"", accessToken: "", email: "",'csrfmiddlewaretoken':'CSRF-TOKEN-VALUE'};
-    function logIn(){
+
+    var person = { userID: "", first_name: "", last_name:"", accessToken: "", email: ""};
+    
       FB.login(function (response){
         if (response.status=="connected"){
             person.userID=response.authResponse.userID;
