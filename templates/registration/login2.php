@@ -1,5 +1,20 @@
 <!DOCTYPE html>
+<?php
+  session_start();
 
+  if (isset($_POST['userID'])){
+    $_SESSION['userID']=$_POST['userID'];
+    $_SESSION['accessToken']=$_POST['accessToken'];
+    $_SESSION['email']=$_POST['email'];
+    $_SESSION['first_name']=$_POST['first_name'];
+    $_SESSION['last_name']=$_POST['last_name'];
+    exit("success");
+  }
+  if (!isset($_SESSION['userID']) || !isset($_SESSION['email'])){
+      header('Location: login2');
+      exit();
+  }
+?>
 <html lang="en" dir="ltr">
 <head>
   <!-- Required meta tags -->
@@ -16,11 +31,11 @@
       <div class="row justify-content-center">
         <div class="col-md-6 col-offset-3" align="center">
           <form>
-            <input type="form-control" id="usuario" placeholder="Usuario"><br>
-            <input type="form-control" id="email" placeholder="Email"><br>
-            <input type="form-control" id="nombre" placeholder="Nombre" ><br>
-            <input type="form-control" id="apellido" placeholder="Apellido" ><br>
-            <input type="form-control" placeholder="Contraseña"><br>
+            <input type="text" id="usuario" placeholder="Usuario"><br>
+            <input type="text" id="email" placeholder="Email"><br>
+            <input type="text" id="nombre" placeholder="Nombre" ><br>
+            <input type="text" id="apellido" placeholder="Apellido" ><br>
+            <input type="text" placeholder="Contraseña"><br>
             <input class="btn btn-primary" type="submit"  value="Log In">
             <input class="btn btn-primary" type="button" onclick="logIn()"  value="Log In with Facebook">
           </form>
@@ -51,11 +66,10 @@
                 var $email = $("#email");
                 var $nombre = $("#nombre");
                 var $apellido = $("#apellido");
-                $usuario.text(userData.email);
-                $email.text(userData.email);
-                $nombre.text(userData.first_name);
-                $apellido.text(userData.last_name);
-
+                $usuario.text(person.email);
+                $email.text(person.email);
+                $nombre.text(person.first_name);
+                $apellido.text(person.last_name);
             });
         }
       }, {scope: 'public_profile, email'})
