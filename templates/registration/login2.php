@@ -47,7 +47,7 @@
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
   <script>
-    var person = { userID: "", name: "", accessToken: "", email: "", picture:"", 'csrfmiddlewaretoken':'CSRF-TOKEN-VALUE'};
+    var person = { userID: "", first_name: "", last_name:"", accessToken: "", email: "",'csrfmiddlewaretoken':'CSRF-TOKEN-VALUE'};
     function logIn(){
       FB.login(function (response){
         if (response.status=="connected"){
