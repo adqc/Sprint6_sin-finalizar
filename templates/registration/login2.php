@@ -8,6 +8,7 @@
     $_SESSION['email']=$_POST['email'];
     $_SESSION['first_name']=$_POST['first_name'];
     $_SESSION['last_name']=$_POST['last_name'];
+    print($_SESSION['userID']);
     exit("success");
   }
 ?>
@@ -65,6 +66,7 @@
                   data: person,
                   dataType: 'text',
                   success: function (data){
+                    console.log("HOLI");
                     if (data=="success"){
                       window.location="login3";
                     }
