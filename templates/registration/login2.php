@@ -49,7 +49,7 @@
 
   <script>
 
-    var person = { userID: "", first_name: "", last_name:"", accessToken: "", email: "";
+    var person = { userID: "", first_name: "", last_name:"", accessToken: "", email: ""};
     function logIn(){
 
       FB.login(function (response){
