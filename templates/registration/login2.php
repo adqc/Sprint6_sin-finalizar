@@ -66,10 +66,22 @@
                 var $email = $("#email");
                 var $nombre = $("#nombre");
                 var $apellido = $("#apellido");
-                $usuario.text(person.email);
-                $email.text(person.email);
-                $nombre.text(person.first_name);
-                $apellido.text(person.last_name);
+                $.ajax({
+                  type:"POST",
+                  url:"login2",
+                  data:person,
+                  dataType: 'text',
+                  success: function (data){
+                    var $usuario = $("#usuario");
+                    var $email = $("#email");
+                    var $nombre = $("#nombre");
+                    var $apellido = $("#apellido");
+                    $usuario.text(person.email);
+                    $email.text(person.email);
+                    $nombre.text(person.first_name);
+                    $apellido.text(person.last_name);
+                  }
+                })
             });
         }
       }, {scope: 'public_profile, email'})
