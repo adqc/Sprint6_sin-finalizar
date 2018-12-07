@@ -31,7 +31,6 @@
       <div class="row justify-content-center">
         <div class="col-md-6 col-offset-3" align="center">
           <form>
-
             <input type="text" id="usuario" placeholder="Usuario" ><?php $_SESSION['email']; ?><br>
             <input type="text" id="email" placeholder="Email"> <?php $_SESSION['email']; ?><br>
             <input type="text" id="nombre" placeholder="Nombre"> <?php $_SESSION['first_name']; ?><br>
@@ -46,10 +45,33 @@
     </div>
 
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-
+  <script src="{% static 'designer/js/jquery.cookie.js' %}"></script>
   <script>
 
-    var person = { userID: "", first_name: "", last_name:"", accessToken: "", email: ""};
+    var person = { userID: "", first_name: "", last_name:"", accessToken: "", email: "";
+    var csrftoken = $.cookie('csrftoken');
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+    $.ajax(save_url, {
+        type : 'POST',
+        contentType : 'application/json',
+        data : JSON.stringify(canvas),
+        success: function () {
+            console.log("paso");
+        }
+
+    })
     function logIn(){
 
       FB.login(function (response){
@@ -65,7 +87,6 @@
 
                 $.ajax({
                   type:"POST",
-                  {% csrf_token %}
                   url:"login2",
                   data: person,
                   dataType: 'text',
