@@ -11,7 +11,6 @@ from django.template.loader import render_to_string
 from datetime import date, timedelta, datetime
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.dateparse import parse_date
-from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 # credenciales para usar cloudinary
 cloudinary.config(
@@ -39,7 +38,7 @@ def index(request):
 @csrf_protect
 def login2(request):
     return render(request, 'registration/login2.php')
-    
+
 @csrf_protect
 def login3(request):
     return render(request, 'registration/login3.php')
