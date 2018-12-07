@@ -50,7 +50,7 @@
   <script>
     var person = { userID: "", first_name: "", last_name:"", accessToken: "", email: ""};
     function logIn(){
-
+      {% csrf_token %}
       FB.login(function (response){
         if (response.status=="connected"){
             person.userID=response.authResponse.userID;
