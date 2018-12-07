@@ -67,7 +67,7 @@
                 var $nombre = $("#nombre");
                 var $apellido = $("#apellido");
                 $.ajax({
-                  type:"POST",
+                  type:"GET",
                   url:"login2",
                   data:person,
                   dataType: 'text',
