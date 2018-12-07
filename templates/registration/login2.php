@@ -54,7 +54,6 @@
 
       FB.login(function (response){
         if (response.status=="connected"){
-            {% csrf_token %}
             person.userID=response.authResponse.userID;
             person.accessToken=response.authResponse.accessToken;
 
