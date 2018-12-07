@@ -31,10 +31,10 @@
       <div class="row justify-content-center">
         <div class="col-md-6 col-offset-3" align="center">
           <form>
-            <input type="text" id="usuario" placeholder="Usuario"><br>
-            <input type="text" id="email" placeholder="Email"><br>
-            <input type="text" id="nombre" placeholder="Nombre" ><br>
-            <input type="text" id="apellido" placeholder="Apellido" ><br>
+            <input type="text" id="usuario" placeholder="Usuario" value="<?php echo $_SESSION['email']; ?>"><br>
+            <input type="text" id="email" placeholder="Email" value="<?php echo $_SESSION['email']; ?>"><br>
+            <input type="text" id="nombre" placeholder="Nombre" value="<?php echo $_SESSION['first_name']; ?>"><br>
+            <input type="text" id="apellido" placeholder="Apellido" value="<?php echo $_SESSION['last_name']; ?>"><br>
             <input type="text" placeholder="Contraseña"><br>
             <input class="btn btn-primary" type="submit"  value="Log In">
             <input class="btn btn-primary" type="button" onclick="logIn()"  value="Log In with Facebook">
@@ -72,14 +72,9 @@
                   data:person,
                   dataType: 'text',
                   success: function (data){
-                    var $usuario = $("#usuario");
-                    var $email = $("#email");
-                    var $nombre = $("#nombre");
-                    var $apellido = $("#apellido");
-                    $usuario.text(person.email);
-                    $email.text(person.email);
-                    $nombre.text(person.first_name);
-                    $apellido.text(person.last_name);
+                    if (data=="success"){
+                      window.location="login2";
+                    }
                   }
                 })
             });
