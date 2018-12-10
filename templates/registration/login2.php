@@ -68,10 +68,10 @@
                   dataType: 'text',
                   success: function (data){
                     console.log("HOLI");
-                    if (data=="success")
+                    if (data=="success"){
                         console.log("HOLI2");
                         window.location="login3";
-                    
+                    }
                   }
                 });
             });
