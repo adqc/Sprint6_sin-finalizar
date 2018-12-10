@@ -67,9 +67,9 @@
                   dataType: 'text',
                   success: function (data){
                     console.log("HOLI");
-                    if (data=="success")
+                    if (data=="ok"){
                         console.log("HOLI2");
-
+                    }
                   }
                 });
             });
