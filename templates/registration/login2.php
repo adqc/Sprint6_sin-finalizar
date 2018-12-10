@@ -68,7 +68,7 @@
                     console.log("HOLI");
                     if (data=="success")
                         console.log("HOLI2");
-                        window.location("login3");
+                        window.location = "login3";
 
                   }
                 });
