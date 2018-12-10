@@ -46,6 +46,8 @@
 
 
   <script>
+
+
     var person = { userID: "", first_name: "", last_name:"", accessToken: "", email: ""};
     function logIn(){
 
@@ -59,20 +61,19 @@
                 person.first_name=userData.first_name;
                 person.last_name=userData.last_name;
                 person.email=userData.email;
-
                 $.ajax({
                   method:"POST",
                   url:"login2",
                   data: person,
                   dataType: 'text',
-                  success: function (){
-
+                  success: function (data){
                     console.log("HOLI");
-
+                    if (data=="success"){
                       console.log("HOLI2");
                       window.location="login3";
-
-                  }
+                    }
+                  },error: function(error) {
+                    console.log(error);
                 })
             });
         }
