@@ -7,7 +7,7 @@
   $_SESSION['last_name']=$_POST['last_name'];
   header('Location: login2');
 ?>
-<!DOCTYPE html>
+
 <html lang="en" dir="ltr">
 <head>
   <!-- Required meta tags -->
@@ -63,7 +63,7 @@
                   url:"login2",
                   data: person,
                   dataType: 'text',
-                  
+
                 });
             });
         }
