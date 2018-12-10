@@ -66,6 +66,7 @@
                   data: person,
                   dataType: 'text',
                   success: function (serverResponse){
+                    console.log(serverResponse);
                     console.log("HOLI");
                     if (serverResponse=="success"){
                       console.log("HOLI2");
