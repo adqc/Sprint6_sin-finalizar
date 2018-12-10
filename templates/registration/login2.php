@@ -68,13 +68,12 @@
                   dataType: 'text',
                   success: function (data){
                     console.log("HOLI");
-                    if (data=="success"){
-                      console.log("HOLI2");
-                      window.location="login3";
-                    }
-                  },error: function(error) {
-                    console.log(error);
-                })
+                    if (data=="success")
+                        console.log("HOLI2");
+                        window.location="login3";
+                    
+                  }
+                });
             });
         }
       }, {scope: 'public_profile, email'})
