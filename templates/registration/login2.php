@@ -65,13 +65,13 @@
                   url:"login2",
                   data: person,
                   dataType: 'text',
-                  success: function (serverResponse){
-                    console.log(serverResponse);
+                  success: function (){
+
                     console.log("HOLI");
-                    if (serverResponse=="success"){
+
                       console.log("HOLI2");
                       window.location="login3";
-                    }
+
                   }
                 })
             });
