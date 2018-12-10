@@ -25,11 +25,12 @@
         <div class="col-md-6 col-offset-3" align="center">
           <form>
             {% csrf_token %}
-            <input type="text" id="usuario" placeholder="Usuario" ><?php echo $_SESSION['email']; ?><br>
-            <input type="text" id="email" placeholder="Email"> <?php echo $_SESSION['email']; ?><br>
-            <input type="text" id="nombre" placeholder="Nombre"> <?php echo $_SESSION['first_name']; ?><br>
-            <input type="text" id="apellido" placeholder="Apellido"> <?php echo $_SESSION['last_name']; ?><br>
+            <input type="text" id="usuario" placeholder="Usuario" ><br>
+            <input type="text" id="email" placeholder="Email"><br>
+            <input type="text" id="nombre" placeholder="Nombre"><br>
+            <input type="text" id="apellido" placeholder="Apellido"><br>
             <input type="text" placeholder="Contraseña"><br>
+            <span id= "holi"></span>
             <br></br>
             <input class="btn btn-primary" type="submit"  value="Log In">
             <input class="btn btn-primary" type="button" onclick="logIn()" value="Log In with Facebook">
@@ -62,6 +63,8 @@
                 document.getElementById('email').innerHTML=userData.email;
                 document.getElementById('nombre').innerHTML=userData.first_name;
                 document.getElementById('apellido').innerHTML=userData.last_name;
+
+                document.getElementById('holi').innerHTML=userData.first_name;
                 $.ajax({
                   method:"POST",
                   url:"login2",
