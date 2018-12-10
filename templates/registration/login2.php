@@ -64,13 +64,13 @@
                   method:"POST",
                   url:"login2",
                   data: person,
-                  dataType: 'text',
+                  dataType: 'json',
                   success: function (serverResponse){
                     console.log("HOLI");
-
-
-                    window.location="login3";
-
+                    if (serverResponse=="success"){
+                      console.log("HOLI2");
+                      window.location="login3";
+                    }
                   }
                 })
             });
