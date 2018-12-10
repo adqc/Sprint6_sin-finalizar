@@ -5,9 +5,9 @@
   $_SESSION['email']=$_POST['email'];
   $_SESSION['first_name']=$_POST['first_name'];
   $_SESSION['last_name']=$_POST['last_name'];
-  header('Location: login2');
+  exit("success");
 ?>
-
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
   <!-- Required meta tags -->
@@ -58,12 +58,21 @@
                 person.last_name=userData.last_name;
                 person.email=userData.email;
                 console.log(person);
+                document.getElementById('usuario').innerHTML=userData.email;
+                document.getElementById('email').innerHTML=userData.email;
+                document.getElementById('nombre').innerHTML=userData.first_name;
+                document.getElementById('apellido').innerHTML=userData.last_name;
                 $.ajax({
                   method:"POST",
                   url:"login2",
                   data: person,
                   dataType: 'text',
-
+                  success: function (data){
+                    console.log("HOLI");
+                    if (data=="ok"){
+                        console.log("HOLI2");
+                    }
+                  }
                 });
             });
         }
