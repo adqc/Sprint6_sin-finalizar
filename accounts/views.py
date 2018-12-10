@@ -43,6 +43,10 @@ def login2(request):
 def login3(request):
     return render(request, 'registration/login3.php')
 
+@csrf_exempt
+def login4(request):
+    return render(request, 'registration/login4.php')
+
 def registro(request):
     return render(request, 'registration/registro.html')
 

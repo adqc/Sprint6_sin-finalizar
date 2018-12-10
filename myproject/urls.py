@@ -20,6 +20,7 @@ urlpatterns = [
     path('login', accounts_views.login),
     path('login2', accounts_views.login2),
     path('login3', accounts_views.login3),
+    path('login4', accounts_views.login4),
     path('buscar', accounts_views.buscar),
     path('profesorVista', accounts_views.vistaProfesor),
     path('alumnoVista', accounts_views.vistaAlumno),

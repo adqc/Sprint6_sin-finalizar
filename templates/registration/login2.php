@@ -5,9 +5,7 @@
   $_SESSION['email']=$_POST['email'];
   $_SESSION['first_name']=$_POST['first_name'];
   $_SESSION['last_name']=$_POST['last_name'];
-  echo $_POST['first_name'];
-  echo $_POST['last_name'];
-  exit("success");
+  header('Location: login2');
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -27,10 +25,10 @@
         <div class="col-md-6 col-offset-3" align="center">
           <form>
             {% csrf_token %}
-            <input type="text" id="usuario" placeholder="Usuario" ><?php $_SESSION['email']; ?><br>
-            <input type="text" id="email" placeholder="Email"> <?php $_SESSION['email']; ?><br>
-            <input type="text" id="nombre" placeholder="Nombre"> <?php $_SESSION['first_name']; ?><br>
-            <input type="text" id="apellido" placeholder="Apellido"> <?php $_SESSION['last_name']; ?><br>
+            <input type="text" id="usuario" placeholder="Usuario" ><?php echo $_SESSION['email']; ?><br>
+            <input type="text" id="email" placeholder="Email"> <?php echo $_SESSION['email']; ?><br>
+            <input type="text" id="nombre" placeholder="Nombre"> <?php echo $_SESSION['first_name']; ?><br>
+            <input type="text" id="apellido" placeholder="Apellido"> <?php echo $_SESSION['last_name']; ?><br>
             <input type="text" placeholder="Contraseña"><br>
             <br></br>
             <input class="btn btn-primary" type="submit"  value="Log In">
@@ -65,12 +63,7 @@
                   url:"login2",
                   data: person,
                   dataType: 'text',
-                  success: function (data){
-                    console.log("HOLI");
-                    if (data=="ok"){
-                        console.log("HOLI2");
-                    }
-                  }
+                  
                 });
             });
         }
