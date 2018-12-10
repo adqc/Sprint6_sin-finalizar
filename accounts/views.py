@@ -37,11 +37,11 @@ def index(request):
 
 @csrf_exempt
 def login2(request):
-    return render(request, 'registration/login2.php')
+    return redirect('/login2')
 
 @csrf_exempt
 def login3(request):
-    return render(request, 'registration/login3.php')
+    return redirect('/login3')
 
 def registro(request):
     return render(request, 'registration/registro.html')
