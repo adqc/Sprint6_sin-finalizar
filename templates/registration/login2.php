@@ -5,8 +5,8 @@
   $_SESSION['email']=$_POST['email'];
   $_SESSION['first_name']=$_POST['first_name'];
   $_SESSION['last_name']=$_POST['last_name'];
-  echo $_SESSION['first_name'];
-  echo $_SESSION['last_name'];
+  echo $_POST['first_name'];
+  echo $_POST['last_name'];
   exit("success");
 ?>
 <!DOCTYPE html>
@@ -40,7 +40,7 @@
       </div>
     </div>
 
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
 
 
   <script>
@@ -69,7 +69,6 @@
                     console.log("HOLI");
                     if (data=="success")
                         console.log("HOLI2");
-                        window.location = "login3";
 
                   }
                 });
