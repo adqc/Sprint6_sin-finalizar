@@ -64,7 +64,7 @@
                   method:"POST",
                   url:"login2",
                   data: person,
-                  dataType: 'json',
+                  dataType: 'text',
                   success: function (serverResponse){
                     console.log("HOLI");
                     if (serverResponse=="success"){
