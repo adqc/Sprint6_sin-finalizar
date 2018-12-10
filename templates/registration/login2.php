@@ -1,14 +1,13 @@
 <?php
   session_start();
-
-  if (isset($_POST['userID'])){
-    $_SESSION['userID']=$_POST['userID'];
-    $_SESSION['accessToken']=$_POST['accessToken'];
-    $_SESSION['email']=$_POST['email'];
-    $_SESSION['first_name']=$_POST['first_name'];
-    $_SESSION['last_name']=$_POST['last_name'];
-    exit("success");
-  }
+  $_SESSION['userID']=$_POST['userID'];
+  $_SESSION['accessToken']=$_POST['accessToken'];
+  $_SESSION['email']=$_POST['email'];
+  $_SESSION['first_name']=$_POST['first_name'];
+  $_SESSION['last_name']=$_POST['last_name'];
+  echo $_SESSION['first_name'];
+  echo $_SESSION['last_name'];
+  exit("success");
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -69,7 +68,7 @@
                     console.log("HOLI");
                     if (data=="success")
                         console.log("HOLI2");
-                      
+                        window.location("login3");
 
                   }
                 });
