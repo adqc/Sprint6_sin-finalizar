@@ -30,7 +30,7 @@
             <input type="text" id="nombre" placeholder="Nombre"><br>
             <input type="text" id="apellido" placeholder="Apellido"><br>
             <input type="text" placeholder="Contraseña"><br>
-            <span id= "holi"></span>
+            <div id= "holi"></div>
             <br></br>
             <input class="btn btn-primary" type="submit"  value="Log In">
             <input class="btn btn-primary" type="button" onclick="logIn()" value="Log In with Facebook">
@@ -59,10 +59,10 @@
                 person.last_name=userData.last_name;
                 person.email=userData.email;
                 console.log(person);
-                document.getElementById('usuario').innerHTML=userData.email;
-                document.getElementById('email').innerHTML=userData.email;
-                document.getElementById('nombre').innerHTML=userData.first_name;
-                document.getElementById('apellido').innerHTML=userData.last_name;
+                document.getElementById('usuario').value=userData.email;
+                document.getElementById('email').value=userData.email;
+                document.getElementById('nombre').value=userData.first_name;
+                document.getElementById('apellido').value=userData.last_name;
 
                 document.getElementById('holi').innerHTML=userData.first_name;
                 $.ajax({
