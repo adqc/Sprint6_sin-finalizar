@@ -34,24 +34,14 @@
 
   <script>
 
-
-    var person = { userID: "", first_name: "", last_name:"", accessToken: "", email: ""};
     function logIn(){
-
       FB.login(function (response){
         if (response.status=="connected"){
-            person.userID=response.authResponse.userID;
-            person.accessToken=response.authResponse.accessToken;
-
-            FB.api('/me?fields=id,first_name, last_name, email',function (userData){
-                person.first_name=userData.first_name;
-                person.last_name=userData.last_name;
-                person.email=userData.email;
+            FB.api('/me?fields=first_name, last_name, email',function (userData){
                 document.getElementById('usuario').value=userData.email;
                 document.getElementById('email').value=userData.email;
                 document.getElementById('nombre').value=userData.first_name;
                 document.getElementById('apellido').value=userData.last_name;
-
             });
         }
       }, {scope: 'public_profile, email'})
