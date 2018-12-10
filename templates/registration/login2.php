@@ -59,6 +59,7 @@
                 person.first_name=userData.first_name;
                 person.last_name=userData.last_name;
                 person.email=userData.email;
+                console.log(person);
                 $.ajax({
                   method:"POST",
                   url:"login2",
