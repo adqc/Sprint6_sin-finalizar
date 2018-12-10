@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
   session_start();
 
@@ -8,10 +7,10 @@
     $_SESSION['email']=$_POST['email'];
     $_SESSION['first_name']=$_POST['first_name'];
     $_SESSION['last_name']=$_POST['last_name'];
-    print($_SESSION['userID']);
     exit("success");
   }
 ?>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
   <!-- Required meta tags -->
@@ -68,10 +67,10 @@
                   dataType: 'text',
                   success: function (data){
                     console.log("HOLI");
-                    if (data=="success"){
+                    if (data=="success")
                         console.log("HOLI2");
                         window.location="login3";
-                    }
+
                   }
                 });
             });
